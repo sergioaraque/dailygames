@@ -17,7 +17,7 @@ El script interactivo te pedirá el **Project ID** y una **API Key**, y se encar
 Después, genera los retos del día y arranca:
 
 ```bash
-npm run seed    # genera los 5 retos de hoy
+npm run seed    # genera los 6 retos de hoy
 npm run dev     # http://localhost:5173
 ```
 
@@ -44,7 +44,7 @@ ID: `chromasequence`
 | Atributo   | Tipo     | Req | Notas |
 |------------|----------|-----|-------|
 | date       | string   | ✅  | `YYYY-MM-DD` |
-| gameType   | string   | ✅  | `chromasequence` / `numflow` / `pathfinder` / `buscaminas` / `sunmoon` |
+| gameType   | string   | ✅  | `chromasequence` / `numflow` / `pathfinder` / `buscaminas` / `sunmoon` / `memorygrid` |
 | difficulty | string   | ✅  | `easy` / `medium` / `hard` |
 | sequence   | string[] | ❌  | Solo ChromaSequence |
 | payload    | string   | ❌  | JSON stringificado para los demás juegos (máx. 8192 chars) |

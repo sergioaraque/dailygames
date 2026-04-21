@@ -120,7 +120,8 @@ const GAMES = [
   { id: 'numflow',        shortName: 'NumFlow', emoji: '🔢', route: '/numflow' },
   { id: 'pathfinder',     shortName: 'Path',    emoji: '🗺️', route: '/pathfinder' },
   { id: 'buscaminas',     shortName: 'Minas',   emoji: '💣', route: '/buscaminas' },
-  { id: 'sunmoon',        shortName: 'Soles',   emoji: '☀️', route: '/sunmoon' }
+  { id: 'sunmoon',        shortName: 'Soles',   emoji: '☀️', route: '/sunmoon' },
+  { id: 'memorygrid',     shortName: 'Memory',  emoji: '🧠', route: '/memorygrid' }
 ]
 
 const GAME_META = {
@@ -128,13 +129,14 @@ const GAME_META = {
   numflow:        { name: 'NumFlow',        emoji: '🔢', iconBg: '#EEEDFE', route: '/numflow' },
   pathfinder:     { name: 'PathFinder',     emoji: '🗺️', iconBg: '#E6F1FB', route: '/pathfinder' },
   buscaminas:     { name: 'Buscaminas',     emoji: '💣', iconBg: '#F8E4EA', route: '/buscaminas' },
-  sunmoon:        { name: 'Soles y Lunas',  emoji: '☀️', iconBg: '#FDEFD5', route: '/sunmoon' }
+  sunmoon:        { name: 'Soles y Lunas',  emoji: '☀️', iconBg: '#FDEFD5', route: '/sunmoon' },
+  memorygrid:     { name: 'MemoryGrid',     emoji: '🧠', iconBg: '#E7F6F0', route: '/memorygrid' }
 }
 
 const gameType = ref(route.query.game || 'chromasequence')
 const meta     = computed(() => GAME_META[gameType.value])
 
-const hasMoves = computed(() => ['numflow', 'pathfinder', 'buscaminas', 'sunmoon'].includes(gameType.value))
+const hasMoves = computed(() => ['numflow', 'pathfinder', 'buscaminas', 'sunmoon', 'memorygrid'].includes(gameType.value))
 const hasScore = computed(() => gameType.value === 'pathfinder')
 const extraCols = computed(() => (hasMoves.value ? 1 : 0) + (hasScore.value ? 1 : 0))
 const rowGridStyle = computed(() => ({ '--extra-cols': extraCols.value }))

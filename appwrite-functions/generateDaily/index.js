@@ -119,6 +119,23 @@ function genSunMoon(date) {
   }
 }
 
+function genMemoryGrid(date) {
+  const SIZE = 4
+  const PAIRS = (SIZE * SIZE) / 2
+  const rand = seededRand(parseInt(date.replace(/-/g, '')) + 8)
+
+  const symbols = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+  const base = symbols.slice(0, PAIRS)
+  const tiles = shuffleWithSeed([...base, ...base], rand)
+
+  return {
+    payload: JSON.stringify({
+      size: SIZE,
+      tiles
+    })
+  }
+}
+
 export default async ({ log, error }) => {
   const date = today()
   const dow  = new Date().getDay()
@@ -129,7 +146,8 @@ export default async ({ log, error }) => {
     { gameType: 'numflow',        data: genNumFlow(date) },
     { gameType: 'pathfinder',     data: genPathFinder(date) },
     { gameType: 'buscaminas',     data: genBuscaminas(date) },
-    { gameType: 'sunmoon',        data: genSunMoon(date) }
+    { gameType: 'sunmoon',        data: genSunMoon(date) },
+    { gameType: 'memorygrid',     data: genMemoryGrid(date) }
   ]
 
   for (const { gameType, data } of generators) {

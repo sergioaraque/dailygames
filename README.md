@@ -124,6 +124,17 @@ appwrite-functions/
     replayCleanup/    # borrado de resultado para replay
 scripts/            # setup y despliegue de infraestructura
 ```
+## Pruebalo y comparte ideas
+
+Si te gusta DailyGames, pruebalo en tu equipo y compartelo con otras personas para comparar resultados diarios.
+
+Tambien nos encantaria recibir propuestas de nuevos minijuegos, mecanicas o mejoras de dificultad.
+Si pruebas una idea y funciona bien, abre una sugerencia o issue con:
+
+- nombre del juego
+- reglas en 3-5 lineas
+- ejemplo rapido de como se gana o se pierde
+- por que encaja con retos diarios
 
 ## Licencia
 

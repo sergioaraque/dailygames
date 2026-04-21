@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // scripts/seed-today.mjs
-// Genera los 5 retos del día actual (o de la fecha indicada) directamente desde terminal.
+// Genera los 6 retos del día actual (o de la fecha indicada) directamente desde terminal.
 // Uso:
 //   node scripts/seed-today.mjs
 //   node scripts/seed-today.mjs --date 2025-12-25
@@ -145,6 +145,23 @@ function genSunMoon(date) {
   }
 }
 
+function genMemoryGrid(date) {
+  const SIZE = 4
+  const PAIRS = (SIZE * SIZE) / 2
+  const rand = seededRand(parseInt(date.replace(/-/g, '')) + 8)
+
+  const symbols = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+  const base = symbols.slice(0, PAIRS)
+  const tiles = shuffleWithSeed([...base, ...base], rand)
+
+  return {
+    payload: JSON.stringify({
+      size: SIZE,
+      tiles
+    })
+  }
+}
+
 // ── Main ──────────────────────────────────────────────────────────────────────
 async function main() {
   console.log(`\n${c.bold}${c.cyan}  DailyGames — Seed retos${c.reset}`)
@@ -170,6 +187,7 @@ async function main() {
     { gameType: 'pathfinder',     data: genPathFinder(targetDate) },
     { gameType: 'buscaminas',     data: genBuscaminas(targetDate) },
     { gameType: 'sunmoon',        data: genSunMoon(targetDate) },
+    { gameType: 'memorygrid',     data: genMemoryGrid(targetDate) },
   ]
 
   for (const { gameType, data } of generators) {

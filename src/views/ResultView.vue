@@ -61,6 +61,16 @@
           </button>
         </div>
 
+        <!-- Badges -->
+        <div v-if="badges.length" class="badges-wrap">
+          <p class="badges-title">Logros del día</p>
+          <div class="badges-list">
+            <span v-for="badge in badges" :key="badge.key" class="badge-pill">
+              {{ badge.icon }} {{ badge.label }}
+            </span>
+          </div>
+        </div>
+
         <!-- Actions -->
         <div class="actions">
           <button class="btn-outline" @click="router.push(`/leaderboard?game=${gameType}`)">
@@ -107,7 +117,8 @@ const GAME_META = {
   numflow:        { name: 'NumFlow',        emoji: '🔢', iconBg: '#EEEDFE' },
   pathfinder:     { name: 'PathFinder',     emoji: '🗺️', iconBg: '#E6F1FB' },
   buscaminas:     { name: 'Buscaminas',     emoji: '💣', iconBg: '#F8E4EA' },
-  sunmoon:        { name: 'Soles y Lunas',  emoji: '☀️', iconBg: '#FDEFD5' }
+  sunmoon:        { name: 'Soles y Lunas',  emoji: '☀️', iconBg: '#FDEFD5' },
+  memorygrid:     { name: 'MemoryGrid',     emoji: '🧠', iconBg: '#E7F6F0' }
 }
 
 const REPLAY_ROUTES = {
@@ -115,8 +126,35 @@ const REPLAY_ROUTES = {
   numflow: '/numflow',
   pathfinder: '/pathfinder',
   buscaminas: '/buscaminas',
-  sunmoon: '/sunmoon'
+  sunmoon: '/sunmoon',
+  memorygrid: '/memorygrid'
 }
+
+const badges = computed(() => {
+  if (!result.value) return []
+
+  const list = []
+  if (result.value.won && Number(result.value.attempts) === 1) {
+    list.push({ key: 'firsttry', icon: '🎯', label: 'Primer intento' })
+  }
+  if (result.value.won && Number(result.value.timeMs || 0) > 0 && Number(result.value.timeMs) <= 45000) {
+    list.push({ key: 'fast', icon: '⚡', label: 'Ritmo veloz' })
+  }
+  if (result.value.won && Number(result.value.moves || 0) > 0 && Number(result.value.moves) <= 12) {
+    list.push({ key: 'efficient', icon: '🧩', label: 'Muy eficiente' })
+  }
+  if (Number(stats.value?.streak || 0) >= 3) {
+    list.push({ key: 'streak', icon: '🔥', label: `Racha x${stats.value.streak}` })
+  }
+  if (Number(stats.value?.bestStreak || 0) >= 7) {
+    list.push({ key: 'consistency', icon: '🏅', label: 'Constancia semanal' })
+  }
+  if (Number(stats.value?.totalWins || 0) >= 25) {
+    list.push({ key: 'veteran', icon: '👑', label: 'Veterano' })
+  }
+
+  return list
+})
 
 const todayLabel = computed(() =>
   new Date().toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' })
@@ -315,6 +353,10 @@ onUnmounted(() => clearInterval(_interval))
 .share-section { display: flex; flex-direction: column; gap: 8px; }
 .share-text { font-size: 13px; color: var(--color-text-secondary); background: var(--color-background-secondary); border-radius: 8px; padding: 10px 12px; white-space: pre-wrap; margin: 0; font-family: var(--font-mono); }
 .btn-copy { width: 100%; padding: 11px; border-radius: 8px; background: var(--color-text-primary); color: var(--color-background-primary); border: none; font-size: 14px; font-weight: 500; cursor: pointer; }
+.badges-wrap { display: flex; flex-direction: column; gap: 8px; }
+.badges-title { margin: 0; font-size: 12px; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: .05em; }
+.badges-list { display: flex; gap: 6px; flex-wrap: wrap; }
+.badge-pill { background: #edf6f2; color: #2f5e4a; border: 1px solid #c4dece; border-radius: 999px; padding: 4px 10px; font-size: 12px; font-weight: 500; }
 .actions { display: flex; flex-direction: column; gap: 8px; }
 .btn-outline { background: transparent; border: 0.5px solid var(--color-border-secondary); border-radius: 8px; padding: 11px; font-size: 14px; cursor: pointer; color: var(--color-text-primary); width: 100%; }
 .btn-outline:hover { background: var(--color-background-secondary); }

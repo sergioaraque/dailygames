@@ -101,7 +101,8 @@ const GAMES = [
   { id: 'numflow',        name: 'NumFlow',        emoji: '🔢', iconBg: '#EEEDFE', route: '/numflow', desc: 'Ordena los números moviendo una pieza a la vez.', tags: ['lógica', 'deslizamiento'] },
   { id: 'pathfinder',     name: 'PathFinder',     emoji: '🗺️', iconBg: '#E6F1FB', route: '/pathfinder', desc: 'Traza el camino óptimo siguiendo las reglas del tablero.', tags: ['ruta', 'estrategia'] },
   { id: 'buscaminas',     name: 'Buscaminas',     emoji: '💣', iconBg: '#F8E4EA', route: '/buscaminas', desc: 'Despeja casillas sin tocar minas y marca minas con banderas.', tags: ['casual', 'deducción'] },
-  { id: 'sunmoon',        name: 'Soles y Lunas',  emoji: '☀️', iconBg: '#FDEFD5', route: '/sunmoon', desc: 'Completa el tablero equilibrando soles y lunas por fila y columna.', tags: ['lógica', 'patrones'] }
+  { id: 'sunmoon',        name: 'Soles y Lunas',  emoji: '☀️', iconBg: '#FDEFD5', route: '/sunmoon', desc: 'Completa el tablero equilibrando soles y lunas por fila y columna.', tags: ['lógica', 'patrones'] },
+  { id: 'memorygrid',     name: 'MemoryGrid',     emoji: '🧠', iconBg: '#E7F6F0', route: '/memorygrid', desc: 'Descubre todas las parejas antes de agotar los fallos.', tags: ['memoria', 'parejas'] }
 ]
 
 const totalGames = computed(() => GAMES.length)

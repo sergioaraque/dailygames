@@ -10,6 +10,7 @@ const routes = [
   { path: '/pathfinder',  component: () => import('@/games/pathfinder/PathFinder.vue'),   name: 'pathfinder',  meta: { requiresAuth: true } },
   { path: '/buscaminas',  component: () => import('@/games/buscaminas/Buscaminas.vue'),   name: 'buscaminas',  meta: { requiresAuth: true } },
   { path: '/sunmoon',     component: () => import('@/games/sunmoon/SunMoon.vue'),         name: 'sunmoon',     meta: { requiresAuth: true } },
+  { path: '/memorygrid',  component: () => import('@/games/memorygrid/MemoryGrid.vue'),   name: 'memorygrid',  meta: { requiresAuth: true } },
   { path: '/result',      component: () => import('@/views/ResultView.vue'),              name: 'result',      meta: { requiresAuth: true } },
   { path: '/leaderboard', component: () => import('@/views/LeaderboardView.vue'),         name: 'leaderboard', meta: { requiresAuth: true } }
 ]
