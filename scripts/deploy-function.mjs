@@ -20,7 +20,35 @@ const info = (msg) => console.log(`  ${c.cyan}·${c.reset} ${msg}`)
 const warn = (msg) => console.log(`  ${c.yellow}!${c.reset} ${msg}`)
 
 const rl  = createInterface({ input: process.stdin, output: process.stdout })
-const ask = (q, def = '') => new Promise(r => rl.question(`  ${c.cyan}?${c.reset} ${q}${def ? ` ${c.gray}(${def})${c.reset}` : ''}: `, a => r(a.trim() || def)))
+
+async function ensureFunctionConfig(fns, fnDoc) {
+  const desiredCommands = 'npm install'
+  const desiredEntrypoint = 'index.js'
+  const needsCommandsUpdate = (fnDoc.commands || '').trim() !== desiredCommands
+  const needsEntrypointUpdate = (fnDoc.entrypoint || '').trim() !== desiredEntrypoint
+
+  if (!needsCommandsUpdate && !needsEntrypointUpdate) {
+    ok('Configuracion de build ya correcta (entrypoint + commands)')
+    return
+  }
+
+  await fns.update(
+    fnDoc.$id,
+    fnDoc.name,
+    fnDoc.runtime,
+    fnDoc.execute,
+    fnDoc.events,
+    fnDoc.schedule,
+    fnDoc.timeout,
+    fnDoc.enabled,
+    fnDoc.logging,
+    desiredEntrypoint,
+    desiredCommands
+  )
+
+  if (needsEntrypointUpdate) ok('Entrypoint actualizado: index.js')
+  if (needsCommandsUpdate) ok('Comando de build actualizado: npm install')
+}
 
 async function syncVariables(fns, functionId, variables) {
   const current = await fns.listVariables(functionId)
@@ -80,6 +108,7 @@ async function main() {
   let fnDoc = null
   try {
     fnDoc = await fns.get(FN_ID)
+    await ensureFunctionConfig(fns, fnDoc)
     warn(`Función ${FN_ID} ya existe — se actualizará el código`)
   } catch {
     info('Creando función...')
@@ -96,7 +125,9 @@ async function main() {
           '0 0 * * *',
           undefined,
           true,
-          true
+          true,
+          'index.js',
+          'npm install'
         )
         ok(`Función creada: ${FN_ID} (${runtime})`)
         created = true
